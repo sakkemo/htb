@@ -1,0 +1,97 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{epsf,epsfig}
+\usepackage{graphicx}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{t1enc} %utf8
+\usepackage{enumerate} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\setlength{\textwidth}{450pt}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{120pt}
+\setlength{\leftmargin}{0cm}
+\setlength{\rightmargin}{0cm}
+%\linespread{1.24} %rivivali 1.5
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+\setlength{\voffset}{-1in} 
+%\addtolength{\textheight}{40pt}
+
+\title{T-61.5050 -- Exercise 4}
+\author{Sakari Cajanus (82036R)}
+\date{\today{}}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+%\begin{abstract}
+%Short and simplistic overview of R/BioConductor with basic hands-on
+%exercises. For a full description of R, see www.r-project.org.
+%\end{abstract}
+
+<<fig=FALSE,pdf=false,echo=FALSE>>= 
+require(hgu95av2cdf) 
+require(hgu95av2probe) 
+require(affy)
+require(affydata)
+require(affyPLM)
+@
+\section{Preprocessing and normalization}
+
+\begin{enumerate}[a.]
+\item In the first part of the problem, it was only required the data CEL-files from the given site.
+\item Here we  read the data to R from the CEL files. I used 9 samples for the healthy and 9 samples for those with tumors.
+<<fig=FALSE,pdf=false,echo=TRUE>>= 
+affyset = ReadAffy("N01__normal.CEL",
+                   "N02__normal.CEL",
+                   "N03__normal.CEL",
+                   "N04__normal.CEL",
+                   "N05__normal.CEL",
+                   "N06__normal.CEL",
+                   "N10__normal.CEL",
+                   "N11__normal.CEL",
+                   "N13__normal.CEL",
+                   "T01__tumor.CEL",
+                   "T02__tumor.CEL",
+                   "T03__tumor.CEL",
+                   "T04__tumor.CEL",
+                   "T05__tumor.CEL",
+                   "T06__tumor.CEL",
+                   "T10__tumor.CEL",
+                   "T11__tumor.CEL",
+                   "T13__tumor.CEL",
+                   celfile.path="./cel/")
+affyset@cdfName <- "HGU95Av2_Hs_ENTREZG"
+@
+\item The boxplots for unnormalized expression intensity are shown in the figure below.
+% c) Plot spot intensity histograms and-or boxplots for each array using raw, unnormalized data. Try also taking logarithm of the data.
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+boxplot(affyset)
+@
+%The Relative Log Expression (RLE) values are computed by calculating for each probe-set the ratio between the expression of a probe-set and the median expression of this probe-set across all arrays of the experiment. It is assumed that most probe-sets are not changed across the arrays, so it is expected that these ratios are around 0 on a log scale. The boxplots presenting the distribution of these log-ratios should then be centered near 0 and have similar spread. Other behavior would be a sign of low quality. 
+I also plotted the relative log expression, which are computed by calculating for earch probe-set the ratio between the expression of a probe-set and the median expression of this probe-set acrossa all arrays.
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+dataplm = fitPLM(affyset)
+RLE(dataplm)
+@
+
+% The Normalized Unscaled Standard Error (NUSE) is the individual probe error fitting the Probe-Level Model (the PLM models expression measures using a M-estimator robust regression). The NUSE values are standardized at the probe-set level across the arrays: median values for each probe-set are set to 1. The boxplots allow checking (1) if all distributions are centered near 1 - typically an array with a boxplot centered around 1.1 shows bad quality and (2) if one array has globally higher spread of NUSE distribution than others, which may also be a sign of low quality.
+% http://arrayanalysis.org/main.html
+The normalized unscaled standard error is individual probe error fitting of the Probe-Level Model. Boxplots centered around 1.1 or higher spread than the others can be signs of low quality.
+
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+NUSE(dataplm)
+@
+\item As for the MA plots, example is shown below:
+%MA plots for unnormalized data
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+MAplot(affyset)
+@
+\item The normalization of the data can be done in many ways. Robust Multi-Array (RMA) means quantile normalization, such that intensities are adjusted to produce identical distributions. GC-RMA also takes into account the probes GC content.
+\end{enumerate}
+\end{document}

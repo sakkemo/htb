@@ -92,6 +92,7 @@ NUSE(dataplm)
 <<fig=TRUE,pdf=true,echo=TRUE>>= 
 MAplot(affyset)
 @
+For 
 \item The normalization of the data can be done in many ways. Robust Multi-Array (RMA) means quantile normalization, such that intensities are adjusted to produce identical distributions. GC-RMA also takes into account the probes GC content.
 <<fig=FALSE,pdf=false,echo=TRUE>>=
 affyset.normalized <- gcrma(affyset)
@@ -99,10 +100,14 @@ affyset.normalized <- gcrma(affyset)
 \item The plots that were shown above for the normalized datasets:
 <<fig=TRUE,pdf=true,echo=TRUE>>= 
 boxplot(affyset.normalized)
+MAplot(affyset.normalized)
+@
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
 dataplm = fitPLM(affyset, normalize=T, normalize.method="quantile")
 RLE(dataplm)
+@
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
 NUSE(dataplm)
-MAplot(affyset.normalized)
 @
 \end{enumerate}
 \end{document}

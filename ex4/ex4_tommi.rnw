@@ -1,0 +1,58 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{epsf,epsfig}
+\usepackage{graphicx}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{t1enc} %utf8
+
+\setlength{\textwidth}{450pt}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{120pt}
+\setlength{\leftmargin}{0cm}
+\setlength{\rightmargin}{0cm}
+%\linespread{1.24} %rivivali 1.5
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+\setlength{\voffset}{-1in} 
+%\addtolength{\textheight}{40pt}
+
+\title{T-61.5050 -- Exercise 4}
+\author{Tommi Vatanen (78763K)}
+\date{\today{}}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+%\begin{abstract}
+%Short and simplistic overview of R/BioConductor with basic hands-on
+%exercises. For a full description of R, see www.r-project.org.
+%\end{abstract}
+
+\section{Preprocessing and normalization of one-channel microarray data}
+
+Required libraries and a data set of 15 normal and tumor samples (30 samples alltogether) was loaded.
+
+<<fig=FALSE,pdf=false,echo=TRUE>>= 
+require(hgu95av2cdf) 
+require(hgu95av2probe) 
+require(affy) 
+require(affydata) 
+require(affyPLM)
+affyset = ReadAffy(celfile.path="cel")
+affyset@cdfName <- "HGU95Av2_Hs_ENTREZG"
+@
+
+Relative log expression (RLE) and normalized unscaled standard error (NUSE) plots for the unnormalized data are generated as follows:
+
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+dataplm = fitPLM(affyset)
+RLE(dataplm)
+NUSE(dataplm)
+@
+
+\end{document}

@@ -93,6 +93,11 @@ NUSE(dataplm)
 MAplot(affyset)
 @
 For 
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+gn <- sample(geneNames(affyset),100) ##pick only a few genes
+pms <- pm(affyset[,3:4], gn)
+mva.pairs(pms)
+@
 \item The normalization of the data can be done in many ways. Robust Multi-Array (RMA) means quantile normalization, such that intensities are adjusted to produce identical distributions. GC-RMA also takes into account the probes GC content.
 <<fig=FALSE,pdf=false,echo=TRUE>>=
 affyset.normalized <- gcrma(affyset)

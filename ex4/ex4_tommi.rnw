@@ -33,7 +33,7 @@
 %exercises. For a full description of R, see www.r-project.org.
 %\end{abstract}
 
-\section{Preprocessing and normalization of one-channel microarray data}
+\section*{1. Preprocessing and normalization of one-channel microarray data}
 
 Required libraries and a data set of 15 normal and tumor samples (30 samples alltogether) was loaded.
 
@@ -47,12 +47,56 @@ affyset = ReadAffy(celfile.path="cel")
 affyset@cdfName <- "HGU95Av2_Hs_ENTREZG"
 @
 
-Relative log expression (RLE) and normalized unscaled standard error (NUSE) plots for the unnormalized data are generated as follows:
+The boxplots for unnormalized expression intensity are shown in the figure below.
+
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
+boxplot(affyset)
+@
+
+Relative log expression (RLE) and normalized unscaled standard error (NUSE) plots for the unnormalized data are generated and shown below. NUSE is individual probe error fitting of the Probe-Level Model. Boxplots centered around 1.1 or higher spread than the others can be signs of low quality.
 
 <<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
 dataplm = fitPLM(affyset)
 RLE(dataplm)
+@
+
+<<fig=TRUE,pdf=TRUE,echo=TRUE>>= 
 NUSE(dataplm)
 @
+
+One MA plot for un-normalized data is shown below:
+%MA plots for unnormalized data
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+MAplot(affyset)
+@
+
+And a comparison two samples.
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+gn <- sample(geneNames(affyset),100) ##pick only a few genes
+pms <- pm(affyset[,3:4], gn)
+mva.pairs(pms)
+@
+
+The most common normalization methods for Affymetrix data are the Robust Multi-Array (RMA) normalization (quantile normalization, intensities are adjusted to produce identical distributions), GC-RMA (also takes into account the probes GC content) and MAS 5.0. Below, some figures for MAS 5.0 and quantile normalized data are shown.
+
+<<fig=FALSE,pdf=false,echo=TRUE>>=
+affyset.normalized <- mas5(affyset)
+@
+\item The plots that were shown above for the normalized datasets:
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+boxplot(affyset.normalized)
+MAplot(affyset.normalized)
+@
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+dataplm = fitPLM(affyset, normalize=T, normalize.method="quantile")
+RLE(dataplm)
+@
+<<fig=TRUE,pdf=true,echo=TRUE>>= 
+NUSE(dataplm)
+@
+
+\section*{4. RMA vs. MAS 5.0}
+
+The RMA performs quantile normalization across the arrays on probe level and thus assumes that the probe intensity distributions are the same for each array. In MAS5.0, the shape of the intensity distribution is not normalized. Furthermore, RMA assumes a linear model for the background corrected, log-transformed, and normalized probe-level data.
 
 \end{document}

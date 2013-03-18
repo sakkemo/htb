@@ -1,0 +1,57 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{epsf,epsfig}
+\usepackage{graphicx}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
+\usepackage{t1enc} %utf8
+
+\setlength{\textwidth}{450pt}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{120pt}
+\setlength{\leftmargin}{0cm}
+\setlength{\rightmargin}{0cm}
+%\linespread{1.24} %rivivali 1.5
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{2mm}
+\setlength{\voffset}{-1in} 
+%\addtolength{\textheight}{40pt}
+
+\title{T-61.5050 -- Exercise 6}
+\author{Tommi Vatanen (78763K)}
+\date{\today{}}
+\begin{document}
+\maketitle
+
+%\begin{abstract}
+%Short and simplistic overview of R/BioConductor with basic hands-on
+%exercises. For a full description of R, see www.r-project.org.
+%\end{abstract}
+
+\section*{Question 1}
+
+Basic RNA-Seq pipeline:
+\begin{enumerate}
+ \item Convert RNA population to cDNA library with adaptors attached to both
+ends of each fragment
+ \item High-throughput sequence cDNA fragments
+ \item Align against reference genome or transcriptome. Quantify expression
+levels, enumerate expressed splice variants, etc.
+\end{enumerate}
+
+\section*{Question 2}
+
+In the paper by Marioni et al., the authors investigate the applicability of
+Illumina/Solexa sequencing for studying mRNA expression levels and present
+a protocol for the analysis of gene expression using high-throughput sequencing
+technology. The experiments compared Illumina RNA sequencing with microarray
+hybridization and the authors conclude that the information provided by a single
+lane of Illumina sequencing data is microarray data. It was also found out that
+the sequencing data are highly replicable with relatively little technical
+variation.
+
+\end{document}

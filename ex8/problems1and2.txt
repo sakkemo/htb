@@ -1,0 +1,50 @@
+1.
+
+(a) PCA and SOM can be used to represent high-dimensional data on a 2D plane. PCA is 
+linear method, i.e., it finds a projection of the data on a plane such that the 
+information of the projected data is maximized. SOM is a nonlinear projection method.
+It project data on two dimensional array of prototype vectors such that the neighborhood
+relations are retained. MDS is computed based on the pair-wise distance matrix of the data.
+It finds a two dimensional representation of the data based on the distance matrix.
+
+(b) A collection of interesting bioinformatics visualization can be found in [1]. Figure 7
+shows a high resolution segmentation of ENCODE data by SOM. The SOM was trained using the 
+signal of the 12 different ChIP-seq and DNase-seq assays in the six cell types analysed
+in the paper.
+
+2.
+
+(a) Mahalanobis distance equals euclidean distance on standardized and decorrelated data.
+
+(b) Probability density based clustering methods model the data as a sum of probability 
+distributions (e.g., Gaussian mixture model). The resulting model can be intepreted as
+a clustering for the data. 
+
+(c) From the choices presented, we would use (i) to for bicluster of gene expression 
+data of prostate cancer patients. This is reasonable, since genes are known to be
+coregulated only in certain conditions.
+
+
+[1] An integrated encyclopedia of DNA elements in the human genome,
+Nature 489 (7414) (2012) 57–74. doi:10.1038/nature11247.
+URL http://dx.doi.org/10.1038/nature11247
+
+@article{encode,
+    day = {05},
+    doi = {10.1038/nature11247},
+    issn = {0028-0836},
+    journal = {Nature},
+    keywords = {genome, genomics},
+    month = sep,
+    number = {7414},
+    pages = {57--74},
+    pmcid = {PMC3439153},
+    pmid = {22955616},
+    posted-at = {2012-09-08 13:48:19},
+    priority = {0},
+    publisher = {Nature Publishing Group},
+    title = {{An integrated encyclopedia of DNA elements in the human genome}},
+    url = {http://dx.doi.org/10.1038/nature11247},
+    volume = {489},
+    year = {2012}
+}
